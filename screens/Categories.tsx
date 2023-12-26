@@ -1,15 +1,13 @@
 import { FlatList, ListRenderItemInfo } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { CATEGORIES } from "../data/dummy-data";
 import { Category as CategoryType } from "../types/Categories";
 import { RootStackParamList } from "../types/Navigation";
 
 import Category from "../components/Category";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-interface Props {
-  navigation: NativeStackNavigationProp<RootStackParamList, "Categories">;
-}
+type Props = NativeStackScreenProps<RootStackParamList, "Categories">;
 
 export default function Categories({ navigation }: Props) {
   const pressHandler = (categoryId: string) => {

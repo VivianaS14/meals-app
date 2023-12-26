@@ -1,30 +1,24 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+
 import { Meal } from "../types/Meals";
+import Badge from "./Badge";
+import Card from "./Card";
 
 interface Props {
   item: Meal;
+  onPress: () => void;
 }
 
-let complexityColor = "#303030";
-let affordabilityColor = "#303030";
-
-export default function MealsOverview({ item }: Props) {
-  if (item.complexity === "simple") complexityColor = "#F9F871";
-  if (item.complexity === "challenging") complexityColor = "#FFCE61";
-  if (item.complexity === "hard") complexityColor = "#FFA178";
-
-  if (item.affordability === "affordable") affordabilityColor = "#b9ffb0";
-  if (item.affordability === "pricey") affordabilityColor = "#00C2A8";
-  if (item.affordability === "luxurious") affordabilityColor = "#41d95d";
-
+export default function MealOverview({ item, onPress }: Props) {
   return (
-    <View style={styles.container}>
+    <Card>
       <Pressable
         style={({ pressed }) => [
           styles.button,
           pressed ? styles.buttonPressed : null,
         ]}
         android_ripple={{ color: "#ccc" }}
+        onPress={onPress}
       >
         <Text style={styles.title}>{item.title}</Text>
         <View>
@@ -38,36 +32,15 @@ export default function MealsOverview({ item }: Props) {
         </View>
 
         <View style={styles.overviewContainer}>
-          <View style={styles.descriptionContainer}>
-            <Text style={styles.description}>Complexity: </Text>
-            <Text style={[styles.badge, { backgroundColor: complexityColor }]}>
-              {item.complexity.toUpperCase()}
-            </Text>
-          </View>
-          <View style={styles.descriptionContainer}>
-            <Text style={styles.description}>Affordability: </Text>
-            <Text
-              style={[styles.badge, { backgroundColor: affordabilityColor }]}
-            >
-              {item.affordability.toUpperCase()}
-            </Text>
-          </View>
+          <Badge name="Complexity" value={item.complexity} />
+          <Badge name="Affordability" value={item.affordability} />
         </View>
       </Pressable>
-    </View>
+    </Card>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    margin: 16,
-    borderColor: "#303030",
-    borderWidth: 2,
-    borderRadius: 8,
-    backgroundColor: "#fff",
-  },
-
   title: {
     fontFamily: "Dosis-700",
     fontSize: 24,
@@ -95,17 +68,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 10,
-  },
-
-  badge: {
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderWidth: 1,
-    borderRadius: 150,
-    borderColor: "#303030",
-    backgroundColor: "#303030",
-    fontFamily: "Dosis-700",
-    fontSize: 16,
   },
 
   button: {

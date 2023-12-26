@@ -9,6 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 
 import Categories from "./screens/Categories";
 import MealsOverview from "./screens/MealsOverview";
+import Meal from "./screens/Meal";
 import { RootStackParamList } from "./types/Navigation";
 
 SplashScreen.preventAutoHideAsync();
@@ -55,6 +56,13 @@ export default function App() {
             name="Meals"
             component={MealsOverview}
             // options={({ route }) => ({ title: route.params.categoryId })}
+          />
+          <Stack.Screen
+            name="Meal"
+            component={Meal}
+            options={{
+              title: "",
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
