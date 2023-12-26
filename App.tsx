@@ -30,7 +30,7 @@ export default function App() {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <Text style={styles.title}>MEALS APP !!</Text>
+      <Text style={styles.title}>MEALS APP 😋</Text>
       <Categories />
       <StatusBar style="auto" />
     </View>
@@ -44,8 +44,10 @@ const styles = StyleSheet.create({
   },
 
   title: {
+    marginVertical: 15,
     fontFamily: "Dosis-800",
-    fontSize: 24,
+    fontSize: 34,
     textAlign: "center",
+    color: "#eee",
   },
 });
