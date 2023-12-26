@@ -8,10 +8,12 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
 import Categories from "./screens/Categories";
+import MealsOverview from "./screens/MealsOverview";
+import { RootStackParamList } from "./types/Navigation";
 
 SplashScreen.preventAutoHideAsync();
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -41,10 +43,17 @@ export default function App() {
           }}
         >
           <Stack.Screen
-            name="categories"
+            name="Categories"
             component={Categories}
             options={{
               title: "Meals Categories",
+            }}
+          />
+          <Stack.Screen
+            name="Meals"
+            component={MealsOverview}
+            options={{
+              title: "Meals Overview",
             }}
           />
         </Stack.Navigator>

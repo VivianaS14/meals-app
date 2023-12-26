@@ -1,4 +1,4 @@
-export interface Meals {
+export interface Meal {
   id: string;
   categoryIds: string[];
   title: string;

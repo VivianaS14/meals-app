@@ -4,9 +4,10 @@ import { Category as CategoryType } from "../types/Categories";
 
 interface Props {
   item: CategoryType;
+  onPress: () => void;
 }
 
-export default function Category({ item }: Props) {
+export default function Category({ item, onPress }: Props) {
   return (
     <View style={[styles.item, { backgroundColor: item.color }]}>
       <Pressable
@@ -15,6 +16,7 @@ export default function Category({ item }: Props) {
           pressed ? styles.buttonPressed : null,
         ]}
         android_ripple={{ color: "#ccc" }}
+        onPress={onPress}
       >
         <View style={[styles.innerContainer, { backgroundColor: item.color }]}>
           <Text style={styles.title}>{item.title}</Text>
