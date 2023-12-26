@@ -1,13 +1,17 @@
+import { useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import { StatusBar } from "expo-status-bar";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 
 import Categories from "./screens/Categories";
 
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { useCallback } from "react";
-
 SplashScreen.preventAutoHideAsync();
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -30,9 +34,22 @@ export default function App() {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <Text style={styles.title}>MEALS APP 😋</Text>
-      <Categories />
-      <StatusBar style="auto" />
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerTitleStyle: { fontFamily: "Dosis-700" },
+          }}
+        >
+          <Stack.Screen
+            name="categories"
+            component={Categories}
+            options={{
+              title: "Meals Categories",
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+      <StatusBar style="dark" />
     </View>
   );
 }
@@ -40,14 +57,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 50,
-  },
-
-  title: {
-    marginVertical: 15,
-    fontFamily: "Dosis-800",
-    fontSize: 34,
-    textAlign: "center",
-    color: "#eee",
   },
 });
