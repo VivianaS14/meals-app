@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Platform } from "react-native";
 
 import { Category as CategoryType } from "../types/Categories";
 
@@ -8,9 +8,15 @@ interface Props {
 
 export default function Category({ item }: Props) {
   return (
-    <View style={styles.item}>
-      <Pressable style={styles.button}>
-        <View style={styles.innerContainer}>
+    <View style={[styles.item, { backgroundColor: item.color }]}>
+      <Pressable
+        style={({ pressed }) => [
+          styles.button,
+          pressed ? styles.buttonPressed : null,
+        ]}
+        android_ripple={{ color: "#ccc" }}
+      >
+        <View style={[styles.innerContainer, { backgroundColor: item.color }]}>
           <Text style={styles.title}>{item.title}</Text>
         </View>
       </Pressable>
@@ -30,11 +36,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
+    overflow: Platform.OS === "android" ? "hidden" : "visible",
   },
 
   innerContainer: {
     flex: 1,
     padding: 16,
+    borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -43,8 +51,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  buttonPressed: {
+    opacity: 0.5,
+    backgroundColor: "#ccc",
+  },
+
   title: {
-    fontWeight: "bold",
+    fontFamily: "Dosis-700",
     fontSize: 20,
   },
 });
