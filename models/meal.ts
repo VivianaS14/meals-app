@@ -2,8 +2,8 @@ class Meal {
   id: string;
   categoryIds: string[];
   title: string;
-  affordability: string;
-  complexity: string;
+  affordability: "affordable" | "pricey" | "luxurious";
+  complexity: "simple" | "challenging" | "hard";
   imageUrl: string;
   duration: number;
   ingredients: string[];
@@ -17,8 +17,8 @@ class Meal {
     id: string,
     categoryIds: string[],
     title: string,
-    affordability: string,
-    complexity: string,
+    affordability: "affordable" | "pricey" | "luxurious",
+    complexity: "simple" | "challenging" | "hard",
     imageUrl: string,
     duration: number,
     ingredients: string[],
