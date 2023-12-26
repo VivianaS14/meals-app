@@ -39,7 +39,9 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerTitleStyle: { fontFamily: "Dosis-700" },
+            headerStyle: { backgroundColor: "#7b88c3" },
+            headerTitleStyle: { fontFamily: "Dosis-700", fontSize: 27 },
+            contentStyle: { backgroundColor: "#d9dced" },
           }}
         >
           <Stack.Screen
@@ -52,9 +54,7 @@ export default function App() {
           <Stack.Screen
             name="Meals"
             component={MealsOverview}
-            options={{
-              title: "Meals Overview",
-            }}
+            // options={({ route }) => ({ title: route.params.categoryId })}
           />
         </Stack.Navigator>
       </NavigationContainer>
