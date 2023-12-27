@@ -1,13 +1,22 @@
-import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Image,
+  Button,
+} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { RootStackParamList } from "../types/Navigation";
 import { CATEGORIES, MEALS } from "../data/dummy-data";
 import Badge from "../components/Badge";
+import { useLayoutEffect } from "react";
+import IconButton from "../components/IconButton";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Meal">;
 
-export default function Meal({ route }: Props) {
+export default function Meal({ route, navigation }: Props) {
   const mealId = route.params.mealId;
 
   const {
@@ -28,6 +37,20 @@ export default function Meal({ route }: Props) {
   const mealCategories = CATEGORIES.filter((category) =>
     categoryIds.includes(category.id)
   );
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <IconButton
+          icon="heart-outline"
+          pressIcon="heart"
+          size={25}
+          color="#c83048"
+          bgColor="transparent"
+          onPress={() => console.log("Pressed!")}
+        />
+      ),
+    });
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
