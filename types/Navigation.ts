@@ -4,9 +4,5 @@ export type RootStackParamList = {
   Meals: { categoryId: string };
   Meal: { mealId: string };
   Drawer: undefined;
-};
-
-export type RootDrawerParamList = {
   Favorites: undefined;
-  Categories: undefined;
 };

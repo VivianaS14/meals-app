@@ -11,13 +11,18 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/Navigation";
 import { CATEGORIES, MEALS } from "../data/dummy-data";
 import Badge from "../components/Badge";
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import IconButton from "../components/IconButton";
+import { FavoritesContext } from "../store/context/favorites/FavoritesContext";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Meal">;
 
 export default function Meal({ route, navigation }: Props) {
+  const { favorites, addFavorite, removeFavorite } =
+    useContext(FavoritesContext);
+
   const mealId = route.params.mealId;
+  const isFavorite = favorites.includes(mealId);
 
   const {
     title,
@@ -37,20 +42,29 @@ export default function Meal({ route, navigation }: Props) {
   const mealCategories = CATEGORIES.filter((category) =>
     categoryIds.includes(category.id)
   );
+
+  const onFavoriteHandler = () => {
+    console.log("first");
+    if (isFavorite) {
+      removeFavorite(mealId);
+    } else {
+      addFavorite(mealId);
+    }
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <IconButton
-          icon="heart-outline"
-          pressIcon="heart"
+          icon={isFavorite ? "heart" : "heart-outline"}
           size={25}
           color="#c83048"
-          bgColor="transparent"
-          onPress={() => console.log("Pressed!")}
+          bgColor="#f7dee2"
+          onPress={onFavoriteHandler}
         />
       ),
     });
-  }, []);
+  }, [navigation, onFavoriteHandler, isFavorite]);
 
   return (
     <ScrollView style={styles.container}>

@@ -1,7 +1,6 @@
-import { Ionicons } from "@expo/vector-icons";
-import { IconProps } from "@expo/vector-icons/build/createIconSet";
-import { useState } from "react";
 import { Pressable, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+
 interface Props {
   onPress: () => void;
   icon: keyof typeof Ionicons.glyphMap;
@@ -17,25 +16,17 @@ export default function IconButton({
   color = "#303030",
   size = 12,
   bgColor = "#fff",
-  pressIcon,
 }: Props) {
-  const [isPressed, setIsPressed] = useState(false);
-
-  const pressHandler = () => {
-    onPress();
-    setIsPressed(!isPressed);
-  };
-
   return (
     <Pressable
-      onPress={pressHandler}
+      onPress={onPress}
       style={({ pressed }) =>
         pressed
           ? [styles.button, styles.pressed]
           : [styles.button, { backgroundColor: bgColor }]
       }
     >
-      <Ionicons name={isPressed ? pressIcon : icon} size={size} color={color} />
+      <Ionicons name={icon} size={size} color={color} />
     </Pressable>
   );
 }
