@@ -10,11 +10,55 @@ import * as SplashScreen from "expo-splash-screen";
 import Categories from "./screens/Categories";
 import MealsOverview from "./screens/MealsOverview";
 import Meal from "./screens/Meal";
-import { RootStackParamList } from "./types/Navigation";
+import { RootDrawerParamList, RootStackParamList } from "./types/Navigation";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import Favorites from "./screens/Favorites";
+import IconButton from "./components/IconButton";
+import { Ionicons } from "@expo/vector-icons";
 
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const Drawer = createDrawerNavigator<RootDrawerParamList>();
+
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      initialRouteName="Categories"
+      screenOptions={{
+        headerStyle: { backgroundColor: "#7b88c3" },
+        headerTitleStyle: { fontFamily: "Dosis-700", fontSize: 27 },
+        sceneContainerStyle: { backgroundColor: "#d9dced" },
+        drawerContentStyle: { backgroundColor: "#7b88c3" },
+        drawerLabelStyle: { fontFamily: "Dosis-700", fontSize: 20 },
+        drawerInactiveTintColor: "white",
+        drawerActiveTintColor: "#7b88c3",
+        drawerActiveBackgroundColor: "#d9dced",
+      }}
+    >
+      <Drawer.Screen
+        name="Categories"
+        component={Categories}
+        options={{
+          title: "All Categories",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="list" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Favorites"
+        component={Favorites}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="heart" size={size} color={color} />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
+  );
+}
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -45,6 +89,13 @@ export default function App() {
             contentStyle: { backgroundColor: "#d9dced" },
           }}
         >
+          <Stack.Screen
+            name="Drawer"
+            component={DrawerNavigator}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="Categories"
             component={Categories}
