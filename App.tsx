@@ -2,20 +2,22 @@ import { useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { Ionicons } from "@expo/vector-icons";
 
 import Categories from "./screens/Categories";
 import MealsOverview from "./screens/MealsOverview";
 import Meal from "./screens/Meal";
-import { RootStackParamList } from "./types/Navigation";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import Favorites from "./screens/Favorites";
-import IconButton from "./components/IconButton";
-import { Ionicons } from "@expo/vector-icons";
+
+import { RootStackParamList } from "./types/Navigation";
+import { Provider } from "react-redux";
 import { FavoritesProvider } from "./store/context/favorites/FavoritesProvider";
+import { store } from "./store/redux/store";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -83,42 +85,44 @@ export default function App() {
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <FavoritesProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerStyle: { backgroundColor: "#7b88c3" },
-              headerTitleStyle: { fontFamily: "Dosis-700", fontSize: 27 },
-              contentStyle: { backgroundColor: "#d9dced" },
-            }}
-          >
-            <Stack.Screen
-              name="Drawer"
-              component={DrawerNavigator}
-              options={{
-                headerShown: false,
+        <Provider store={store}>
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{
+                headerStyle: { backgroundColor: "#7b88c3" },
+                headerTitleStyle: { fontFamily: "Dosis-700", fontSize: 27 },
+                contentStyle: { backgroundColor: "#d9dced" },
               }}
-            />
-            <Stack.Screen
-              name="Categories"
-              component={Categories}
-              options={{
-                title: "Meals Categories",
-              }}
-            />
-            <Stack.Screen
-              name="Meals"
-              component={MealsOverview}
-              // options={({ route }) => ({ title: route.params.categoryId })}
-            />
-            <Stack.Screen
-              name="Meal"
-              component={Meal}
-              options={{
-                title: "",
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+            >
+              <Stack.Screen
+                name="Drawer"
+                component={DrawerNavigator}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="Categories"
+                component={Categories}
+                options={{
+                  title: "Meals Categories",
+                }}
+              />
+              <Stack.Screen
+                name="Meals"
+                component={MealsOverview}
+                // options={({ route }) => ({ title: route.params.categoryId })}
+              />
+              <Stack.Screen
+                name="Meal"
+                component={Meal}
+                options={{
+                  title: "",
+                }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </Provider>
       </FavoritesProvider>
       <StatusBar style="dark" />
     </View>

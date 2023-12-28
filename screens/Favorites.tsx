@@ -9,18 +9,23 @@ import {
 } from "react-native";
 import { DrawerScreenProps } from "@react-navigation/drawer";
 
-import { FavoritesContext } from "../store/context/favorites/FavoritesContext";
 import MealItem from "../components/MealOverview";
+import IconButton from "../components/IconButton";
 
 import { MEALS } from "../data/dummy-data";
 import { RootStackParamList } from "../types/Navigation";
 import { Meal } from "../types/Meals";
-import IconButton from "../components/IconButton";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/redux/store";
+import { removeFavorite } from "../store/redux/features/favorites/favoriteSlice";
+import { FavoritesContext } from "../store/context/favorites/FavoritesContext";
 
 type Props = DrawerScreenProps<RootStackParamList, "Favorites">;
 
 export default function Favorites({ navigation }: Props) {
-  const { favorites, removeFavorite } = useContext(FavoritesContext);
+  // const { favorites, removeFavorite } = useContext(FavoritesContext);
+  const favorites = useSelector((state: RootState) => state.favorites);
+  const dispatch = useDispatch();
 
   const favoritesMeals = MEALS.filter((meal) => favorites.includes(meal.id));
 
@@ -33,7 +38,7 @@ export default function Favorites({ navigation }: Props) {
       },
       {
         text: "Yeah",
-        onPress: () => removeFavorite(mealId),
+        onPress: () => dispatch(removeFavorite(mealId)),
       },
     ]);
   };

@@ -1,3 +1,4 @@
+import { useContext, useLayoutEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,18 +9,29 @@ import {
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
+import Badge from "../components/Badge";
+import IconButton from "../components/IconButton";
+
 import { RootStackParamList } from "../types/Navigation";
 import { CATEGORIES, MEALS } from "../data/dummy-data";
-import Badge from "../components/Badge";
-import { useContext, useLayoutEffect } from "react";
-import IconButton from "../components/IconButton";
+
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/redux/store";
+import {
+  addFavorite,
+  removeFavorite,
+} from "../store/redux/features/favorites/favoriteSlice";
 import { FavoritesContext } from "../store/context/favorites/FavoritesContext";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Meal">;
 
 export default function Meal({ route, navigation }: Props) {
-  const { favorites, addFavorite, removeFavorite } =
-    useContext(FavoritesContext);
+  // const { favorites, addFavorite, removeFavorite } =
+  //   useContext(FavoritesContext);
+  const favorites = useSelector((state: RootState) => state.favorites);
+  const dispatch = useDispatch();
+
+  console.log({ favorites });
 
   const mealId = route.params.mealId;
   const isFavorite = favorites.includes(mealId);
@@ -44,11 +56,11 @@ export default function Meal({ route, navigation }: Props) {
   );
 
   const onFavoriteHandler = () => {
-    console.log("first");
     if (isFavorite) {
-      removeFavorite(mealId);
+      dispatch(removeFavorite(mealId));
     } else {
-      addFavorite(mealId);
+      console.log(isFavorite, favorites);
+      dispatch(addFavorite(mealId));
     }
   };
 
